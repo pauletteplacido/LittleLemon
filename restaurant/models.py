@@ -1,12 +1,13 @@
 from django.db import models
 
+
 # Create your models here.
 
 
 class Booking(models.Model):
-    id = models.IntegerField(primary_key=True, max_digits=11)
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
-    no_of_guest = models.IntegerField(max_digits=6)
+    no_of_guest = models.IntegerField()
     bookingDate = models.DateTimeField()
 
     def __str__(self) -> str:
@@ -14,10 +15,10 @@ class Booking(models.Model):
 
 
 class Menu(models.Model):
-    id = models.IntegerField(primary_key=True, max_digits=5)
+    id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    inventory = models.Integer(max_digits=5)
+    inventory = models.IntegerField()
 
     def __str__(self) -> str:
         return self.title
