@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Booking, MenuItem, User, Table
-from .serializers import BookingSerializer, MenuItemSerializer, UserSerializer, TableSerializer
+from .models import Booking, MenuItem, User
+from .serializers import BookingSerializer, MenuItemSerializer, UserSerializer
 from rest_framework import generics, status
 from rest_framework import viewsets
 from django.contrib.auth.models import User
@@ -32,9 +32,11 @@ class BookingViewSet(viewsets.ModelViewSet):
     serializer_class = BookingSerializer(items, many=True)
     permission_classes = [IsAuthenticated]
 
-    api_view(['GET', 'POST'])
+    def get_serializer(self, *args, **kwargs):
+        return BookingSerializer(*args, **kwargs)
 
-    def booking(request):
+    def table(request):
+        response = BookingViewSet.table(request)
         return Response('list of the bookings', status=status.HTTP_200_ok)
 
 
@@ -81,13 +83,3 @@ class UserViewSet(viewsets.ModelViewSet):
     model = User
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
-
-
-class TableListView(generics.ListAPIView):
-    queryset = Table.objects.all()
-    serializer_class = TableSerializer
-
-
-# class MenuView(generics.ListCreateView):
-#     queryset=MenuItem.objects.all()
-#     serializer_class=MenuItemSerializer

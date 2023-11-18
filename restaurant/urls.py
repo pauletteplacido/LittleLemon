@@ -18,24 +18,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
+from rest_framework import routers, viewsets
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
-
-# from .views import UserViewSet
-
-# router = routers.DefaultRouter()
-# router.register(r'users', views.UserViewSet)
-# router.register(r'tables', views.BookingViewSet)
-
-# urlpatterns = [
-#     path('', include(router.urls)),
-#     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-#     path('admin/', admin.site.urls),
-#     path('restaurant/menu/', include('restaurant.urls')),
-#     path('restaurant/booking/', include(router.urls)),
-
-# ]
 
 
 urlpatterns = [
@@ -44,9 +29,8 @@ urlpatterns = [
     path('menu-item/<int:pk>',
          views.SingleMenuItemView.as_view(['GET', 'POST', 'DELETE', 'PUT', 'PATCH'])),
     path('booking/', views.BookingViewSet.as_view(['GET', 'POST'])),
-    path('restaurant/booking/tables/',
-         views.TableListView.as_view(), name='table-list'),
-    path('api-token-auth/', obtain_auth_token)
+    path('api-token-auth/', obtain_auth_token),
+
 
 
 ]

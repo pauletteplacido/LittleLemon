@@ -8,7 +8,9 @@ class Booking(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
     no_of_guest = models.IntegerField()
-    bookingDate = models.DateTimeField()
+    no_of_table = models.IntegerField()
+    bookingDate = models.DateTimeField(auto_now=True)
+    
 
     def __str__(self) -> str:
         return self.name
@@ -44,18 +46,3 @@ class User(models.Model):
 
     def __str__(self) -> str:
         return self.first_name
-
-
-# class CustomUserAdmin(admin.ModelAdmin):
-#     model = User
-#     list_display = ('username', 'email', 'is_staff',
-#                     'is_active', 'date_joined', 'last_login')
-#     search_fields = ('username', 'email')
-#     list_filter = ('is_staff', 'is_active', 'date_joined', 'last_login')
-#     ordering = ('-date_joined',)
-
-
-class Table(models.Model):
-    no_of_table = models.IntegerField()
-    no_of_guest = models.IntegerField()
-    bookingDate = models.DateTimeField()
