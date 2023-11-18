@@ -39,9 +39,10 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 
 urlpatterns = [
-    path('index/', views.index, name='home'),
+    path('', views.IndexView.as_view(), name='index'),
     path('menu/', views.MenuItemView.as_view()),
-    path('menu/<int:pk>', views.SingleMenuItemView.as_view()),
+    path('menu-item/<int:pk>',
+         views.SingleMenuItemView.as_view(['GET', 'POST', 'DELETE', 'PUT', 'PATCH'])),
     path('booking/', views.BookingViewSet.as_view(['GET', 'POST'])),
     path('restaurant/booking/tables/',
          views.TableListView.as_view(), name='table-list'),

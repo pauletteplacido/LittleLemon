@@ -8,13 +8,21 @@ from rest_framework import viewsets
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
+from django.http import HttpResponse
+from django.views.generic.base import TemplateView
+from django.template import loader
+from django.template.loader import get_template
 
 
 # Create your views here.
 
+class IndexView(TemplateView):
+    template_name = 'index.html'
 
-def index(request):
-    return render(request, 'index.html', {})
+    def index(request):
+        template = loader.get_template('restaurant/index.html')
+        context = {}
+        return HttpResponse(template.render(context, request))
 
 
 class BookingViewSet(viewsets.ModelViewSet):
@@ -44,7 +52,7 @@ class MenuItemView(generics.ListCreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-class SingleMenuItemView(generics.RetrieveUpdateAPIView, generics.DestroyAPIView):
+class SingleMenuItemView(viewsets.ViewSet):
     queryset = MenuItem.objects.all()
     model = MenuItem
     serializer_class = MenuItemSerializer
@@ -52,7 +60,7 @@ class SingleMenuItemView(generics.RetrieveUpdateAPIView, generics.DestroyAPIView
     def get(self, request, pk=None):
         item = self.get_object()
         serializer = self.get_serializer(item)
-        return Response(serializer.data)
+        return Response(request, serializer.data)
 
     def put(self, request, pk=None):
         item = self.get_object()

@@ -14,16 +14,7 @@ class Booking(models.Model):
         return self.name
 
 
-# class Menu(models.Model):
-#     id = models.IntegerField(primary_key=True)
-#     title = models.CharField(max_length=255)
-#     price = models.DecimalField(max_digits=6, decimal_places=2)
-#     inventory = models.IntegerField()
-
-#     def __str__(self) -> str:
-#         return self.title
-
-class MenuItem(models.Model):
+class SingleMenuItem(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=6, decimal_places=2)
@@ -31,6 +22,19 @@ class MenuItem(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+class MenuItem(models.Model):
+    id = models.IntegerField(primary_key=True)
+    title = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    inventory = models.IntegerField()
+
+    def get_item(self):
+        return f'{self.title} : {str(self.price)}'
+
+    def __str__(self) -> str:
+        return f'{self.title} : {str(self.price)}'
 
 
 class User(models.Model):
